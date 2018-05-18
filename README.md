@@ -1,4 +1,4 @@
-Repósitorio da atividade prática do processo seletivo Sambatech
+Repositório da atividade prática do processo seletivo Sambatech
 
 Atividades realizadas:
   - Testes manuais da aplicação

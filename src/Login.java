@@ -1,4 +1,7 @@
 import static org.junit.Assert.*;
+
+import java.util.concurrent.TimeUnit;
+
 import org.junit.After;
 import org.junit.Before;
 import org.openqa.selenium.By;
@@ -19,6 +22,7 @@ public class Login {
 
 	private WebDriver driver;
 	
+	//Acessar a página
 	@Before
 	public void acesso()
 	{
@@ -27,10 +31,13 @@ public class Login {
 		driver.get("http://web1.qa.sambatech.com:10000/auth/login");
 	}
 	
-	
+	//Teste de login inválido com validação da mensagem
 	@Test
 	public void loginInvalido()
 	{
+		WebElement email = driver.findElement(By.id("inputEmail"));
+		email.sendKeys("emailinvalido@sambatech.com.br");
+		
 		WebElement entrar = driver.findElement(By.id("login"));
 		entrar.click();
 		
@@ -38,12 +45,15 @@ public class Login {
 		assertTrue(mensagem.getText().contains("Email ou senha incorretos. Saiba Mais"));
 	}
 	
+	//Teste de login válido
 	@Test
 	public void login()
 	{
 		
 		WebElement email = driver.findElement(By.id("inputEmail"));
 		email.sendKeys("avaliacao_qa_samba@sambatech.com.br");
+		
+		driver.manage().timeouts().implicitlyWait(40, TimeUnit.SECONDS);
 		
 		WebElement senha = driver.findElement(By.id("inputPassword"));
 		senha.sendKeys("123456789");
@@ -53,11 +63,14 @@ public class Login {
 		
 		WebElement abaPainel = driver.findElement(By.id("mn-dashboard"));
 		
+		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+		//WebDriverWait.until(condition-that-finds-the-element);
 		assertTrue(abaPainel.getText().contains("Painel"));
 				
 		
 	}
 	
+	//Fechar o browser após o teste
 	@After
 	public void fecharBrowser()
 	{
